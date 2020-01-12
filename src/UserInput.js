@@ -1,14 +1,18 @@
 import React from 'react';
 import firebase from './firebase';
 
-const UserInput = ({user}) =>
+const UserInput = ({user, fetchData}) =>
 {
     const [email, setEmail] = React.useState(user.email);
 
     const onUpdate = () =>
     {
         const db = firebase.firestore();
-        db.collection("test").doc(user.id).set({...user, email});
+        db.collection("test").doc(user.id).set({...user, email})
+        .then(res=>
+        {
+            fetchData();
+        });
     }
 
     const onDelete = () => 
